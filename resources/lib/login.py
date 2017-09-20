@@ -84,10 +84,9 @@ def getCookie(args):
 		'cookies.lwp')
 	#save session to disk
 	args._cj.save(cookiepath, ignore_discard=True)
-
-	c = {}
+	
+	ret = ""
 	for cookie in args._cj:
-		c[cookie.name] = cookie.value
+		ret += urllib.urlencode({cookie.name : cookie.value}) + ";"
 
-	return urllib.urlencode(c)
-
+	return "|Cookie=" + ret[:-1]

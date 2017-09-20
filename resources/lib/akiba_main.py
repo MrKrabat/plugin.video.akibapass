@@ -96,4 +96,3 @@ def showMainMenue(args):
 			{'title':	args._addon.getLocalizedString(30023),
 			'mode':		'collection'})
 	list.endofdirectory()
-

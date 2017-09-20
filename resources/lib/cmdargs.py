@@ -55,4 +55,3 @@ class Args(object):
 			else:
 				kwargs[key] = urllib.unquote_plus(kwargs[key])
 		self.__dict__.update(kwargs)
-

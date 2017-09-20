@@ -13,15 +13,12 @@ details.
 
 You should have received a copy of the GNU General Public License along with this program
 """
-import sys
 import re
-import urllib
 import urllib2
 from bs4 import BeautifulSoup
 
 import xbmc
 import xbmcgui
-import xbmcplugin
 
 import login
 import list
@@ -254,7 +251,7 @@ def startplayback(args):
 		if div:
 			for file in reversed(div.find_all("a")):
 				try:
-					url = 'https://www.akibapass.de' + file['href'] + "|Cookie=" + login.getCookie(args)
+					url = 'https://www.akibapass.de' + file['href'] + login.getCookie(args)
 					item = xbmcgui.ListItem(args.name, path=url)
 					item.setInfo(type="Video", infoLabels={"Title":       args.name,
 															"TVShowTitle": args.name,
@@ -274,12 +271,23 @@ def startplayback(args):
 
 	# using stream with hls
 	elif 'Klicke hier, um den Flash-Player zu benutzen' in html:
+		# get stream file
 		regex = r"file: \"(.*?)\","
 		matches = re.search(regex, html).group()
-		xbmc.log("TEST: " + str(args._cj), xbmc.LOGERROR)
+
 		if matches:
-			xbmc.log("[PLUGIN] TEST: " + matches[7:-2], xbmc.LOGERROR)
-			xbmc.Player().play('https://www.akibapass.de' + matches[7:-2] + "|Cookie=" + login.getCookie(args))
+			url = 'https://www.akibapass.de' + matches[7:-2] + login.getCookie(args)
+			xbmc.log("[PLUGIN] TEST: " + url, xbmc.LOGERROR)
+			item = xbmcgui.ListItem(args.name, path=url)
+			item.setInfo(type="Video", infoLabels={"Title":       args.name,
+													"TVShowTitle": args.name,
+													"episode":		args.episode,
+													"rating":		args.rating,
+													"plot":			args.plot,
+													"year":			args.year,
+													"studio":		args.studio})
+			item.setThumbnailImage(args.icon)
+			xbmc.Player().play(url, item)
 		else:
 			xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
 			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

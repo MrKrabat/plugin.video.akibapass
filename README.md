@@ -15,12 +15,13 @@ Compatibility
 | Device  | Kodi | Status |
 | ------------- | ------------- | ------------- |
 | Windows | 17.x  | Yes  |
+| Linux | 17.x  | Yes  |
 | MacOS | 17.x  | untested  |
 | Android | 17.x  | Yes  |
 | RaspberryPi | 17.x  | Yes  |
 | iOS | 17.x  | untested  |
 
-On devices running an older Kodi version will only support videos you bought.
+Devices running an older Kodi version will only support videos you bought.
 ***
 
 What this plugin currently can do:

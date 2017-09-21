@@ -16,10 +16,10 @@
 		<description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
 		<disclaimer lang="en">WARNING: You MUST be a PREMIUM member to use this plugin</disclaimer>
 		<disclaimer lang="de">HINWEIS: Du MUSST PREMIUM Mitglied sein um dieses Plugin zu benutzen</disclaimer>
-		<license>GNU General Public License, v2</license>
-		<forum>https://forum.xbmc.org/showthread.php?tid=129709</forum>
+		<license>GNU Affero General Public License, v3</license>
+		<forum>--</forum>
 		<website>https://www.akibapass.de/</website>
 		<email></email>
-		<source>https://github.com/zag2me/script.hello.world</source>
+		<source>https://github.com/MrKrabat/plugin.video.akibapass</source>
 	</extension>
 </addon>

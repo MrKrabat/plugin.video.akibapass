@@ -37,7 +37,8 @@ What this plugin currently can do:
 - [x] Watch videos you have bought
 
 What is planned for the future:
-- [ ] Watch videos with premium subscription (WIP)
+- [ ] Watch videos with premium subscription (WIP) [works without sound ATM]
+- [ ] Select video resolution
 
 ***
 

@@ -278,12 +278,27 @@ def startplayback(args):
 		matches = re.search(regex, html).group()
 
 		if matches:
-			xbmcgui.Dialog().ok(args._addonname, "Currently you can only view videos you have bought!")
-			return
-			"""
+			# get m3u8
 			url = 'https://www.akibapass.de' + matches[7:-2] + login.getCookie(args)
+			m3u8 = urllib2.urlopen(url)
+			m3u8 = m3u8.read()
 
-			item = xbmcgui.ListItem(args.name, path=url)
+			# extract stream
+			videourl = None
+			counter = 0
+			for line in m3u8.split("\n"):
+				if line.startswith("https"):
+					counter = counter+1
+					if counter == 6:
+						videourl = line.strip()
+
+			if not videourl:
+				xbmc.log("[PLUGIN] %s: Failed to play stream ERROR_01" % args._addonname, xbmc.LOGERROR)
+				xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))
+				return
+
+			# play stream
+			item = xbmcgui.ListItem(args.name, path=videourl + login.getCookie(args))
 			item.setInfo(type="Video", infoLabels={"Title":       args.name,
 													"TVShowTitle": args.name,
 													"episode":		args.episode,
@@ -292,8 +307,7 @@ def startplayback(args):
 													"year":			args.year,
 													"studio":		args.studio})
 			item.setThumbnailImage(args.icon)
-			xbmc.Player().play(url, item)
-			"""
+			xbmc.Player().play(videourl + login.getCookie(args), item)
 		else:
 			xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
 			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

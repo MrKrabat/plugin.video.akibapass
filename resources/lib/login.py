@@ -46,7 +46,6 @@ def login(username, password, args):
 		#check if session is valid
 		response = urllib2.urlopen('https://www.akibapass.de/de/v2/catalogue')
 		html = response.read()
-		xbmc.log("[PLUGIN] TEST: " + html, xbmc.LOGERROR)
 
 		if 'Meine pers&#246;nlichen Informationen bearbeiten' in html:
 			#session is valid

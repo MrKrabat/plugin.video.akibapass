@@ -4,18 +4,24 @@ Akibapass
 A KODI (XBMC) plugin for Akibapass. 
 
 Git Repo: https://github.com/MrKrabat/plugin.video.akibapass
+
 Forum Posting: --
 
 **WARNING: You MUST be a PREMIUM member OR buy videos to use this plugin!**
 ***
 
-Compatibility (not testet on other devices / kodi versions)
+Compatibility
 
 | Device  | Kodi | Status |
 | ------------- | ------------- | ------------- |
-| Windows UWP  | 17.4  | Yes  |
-| RaspberryPi  | 17.4  | Yes  |
-| Android 7  | 17.4  | Yes  |
+| Windows | 17.x  | Yes  |
+| MacOS | 17.x  | untested  |
+| Android | 17.x  | Yes  |
+| RaspberryPi | 17.x  | Yes  |
+| iOS | 17.x  | untested  |
+
+On devices running an older Kodi version will only support videos you bought.
+***
 
 What this plugin currently can do:
 - [x] Login with your account
@@ -30,4 +36,9 @@ What this plugin currently can do:
 - [x] Watch videos you have bought
 
 What is planned for the future:
-- [ ] Watch videos with premium abo (WIP)
+- [ ] Watch videos with premium subscription (WIP)
+
+***
+
+Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation. 
+This website and addon is not affiliated with Kodi, Team Kodi, or the XBMC Foundation.

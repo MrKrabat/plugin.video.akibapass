@@ -276,8 +276,11 @@ def startplayback(args):
 		matches = re.search(regex, html).group()
 
 		if matches:
+			xbmcgui.Dialog().ok(args._addonname, "Currently you can only view videos you have bought!")
+			return
+			"""
 			url = 'https://www.akibapass.de' + matches[7:-2] + login.getCookie(args)
-			xbmc.log("[PLUGIN] TEST: " + url, xbmc.LOGERROR)
+
 			item = xbmcgui.ListItem(args.name, path=url)
 			item.setInfo(type="Video", infoLabels={"Title":       args.name,
 													"TVShowTitle": args.name,
@@ -288,6 +291,7 @@ def startplayback(args):
 													"studio":		args.studio})
 			item.setThumbnailImage(args.icon)
 			xbmc.Player().play(url, item)
+			"""
 		else:
 			xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
 			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

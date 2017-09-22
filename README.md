@@ -35,9 +35,9 @@ What this plugin currently can do:
 - [x] Display various informations (Kodi displays not all we provide)
 - [x] Reactivate videos/streams
 - [x] Watch videos you have bought
+- [x] Watch videos with premium subscription
 
 What is planned for the future:
-- [ ] Watch videos with premium subscription (WIP) [works without sound ATM]
 - [ ] Select video resolution
 
 ***

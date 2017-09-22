@@ -16,8 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
-import urllib
 import urllib2
+import threading
 from bs4 import BeautifulSoup
 
 import xbmc
@@ -25,6 +25,7 @@ import xbmcgui
 
 import login
 import list
+import server
 
 
 def showCatalog(args):
@@ -276,30 +277,21 @@ def startplayback(args):
 	elif 'Klicke hier, um den Flash-Player zu benutzen' in html:
 		# get stream file
 		regex = r"file: \"(.*?)\","
-		matches = re.search(regex, html).group()
+		matches = re.search(regex, html).group(1)
 
 		if matches:
-			# get m3u8
-			url = 'https://www.akibapass.de' + matches[7:-2] + login.getCookie(args)
+			# save manifest
+			url = 'https://www.akibapass.de' + matches
 			m3u8 = urllib2.urlopen(url)
 			m3u8 = m3u8.read()
 
-			# extract stream
-			videourl = None
-			counter = 0
-			for line in m3u8.split("\n"):
-				if line.startswith("https"):
-					counter = counter+1
-					if counter == 6:
-						videourl = line.strip()
-
-			if not videourl:
-				xbmc.log("[PLUGIN] %s: Failed to play stream ERROR_01" % args._addonname, xbmc.LOGERROR)
-				xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))
-				return
+			# start stream provider
+			t = threading.Thread(target=server.streamprovider, args=(str(m3u8),))
+			t.start()
+			xbmc.sleep(50)
 
 			# play stream
-			item = xbmcgui.ListItem(args.name, path=videourl + login.getCookie(args))
+			item = xbmcgui.ListItem(args.name, path='http://localhost:10147/stream.m3u8' + login.getCookie(args))
 			item.setInfo(type="Video", infoLabels={"Title":       args.name,
 													"TVShowTitle": args.name,
 													"episode":		args.episode,
@@ -308,7 +300,12 @@ def startplayback(args):
 													"year":			args.year,
 													"studio":		args.studio})
 			item.setThumbnailImage(args.icon)
-			xbmc.Player().play(videourl + login.getCookie(args), item)
+			xbmc.Player().play('http://localhost:10147/stream.m3u8' + login.getCookie(args), item)
+
+			# stop stream provider
+			xbmc.sleep(10000)
+			t.do_run = False
+			t.join()
 		else:
 			xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
 			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

@@ -1,1 +1,2 @@
-0.1.0 Initial Alpha-1 Release
+2017.09.20 v0.1.0
++ Initial BETA release

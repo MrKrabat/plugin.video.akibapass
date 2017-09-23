@@ -13,7 +13,8 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#Akibapass Settings
+
+# Akibapass Settings
 
 msgctxt "#30001"
 msgid "Username"
@@ -28,31 +29,15 @@ msgid "Video quality"
 msgstr "Video Qualität"
 
 msgctxt "#30004"
-msgid "180p (Mobil)"
-msgstr "180p (Mobil)"
-
-msgctxt "#30005"
-msgid "360p (SD)"
-msgstr "360p (SD)"
-
-msgctxt "#30006"
-msgid "480p"
-msgstr "480p"
-
-msgctxt "#30007"
-msgid "540p"
-msgstr "540p"
-
-msgctxt "#30008"
 msgid "720p (HD)"
 msgstr "720p (HD)"
 
-msgctxt "#30009"
+msgctxt "#30005"
 msgid "1080p (FullHD)"
 msgstr "1080p (FullHD)"
 
 
-#Akibapass Menue
+# Akibapass Menue
 
 msgctxt "#30020"
 msgid "Catalog"
@@ -69,6 +54,7 @@ msgstr "Meine Downloads"
 msgctxt "#30023"
 msgid "My collection"
 msgstr "Meine Sammlung"
+
 
 # Akibapass Messages
 

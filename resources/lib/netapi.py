@@ -76,6 +76,9 @@ def searchAnime(args):
 
 	soup = BeautifulSoup(html, 'html.parser')
 	ul = soup.find("ul", {"class": "catalog_list"})
+	if not ul:
+		list.endofdirectory()
+		return
 
 	for li in ul.find_all('li'):
 		plot = li.find("p", {"class": "tooltip_text"})
@@ -111,6 +114,9 @@ def myDownloads(args):
 
 	soup = BeautifulSoup(html, 'html.parser')
 	container = soup.find("div", {"class": "big-item-list"})
+	if not container:
+		list.endofdirectory()
+		return
 
 	for div in container.find_all("div", {"class": "big-item-list_item"}):
 		thumb = div.img['src'].replace(" ", "%20")
@@ -137,6 +143,9 @@ def myCollection(args):
 
 	soup = BeautifulSoup(html, 'html.parser')
 	container = soup.find("div", {"class": "big-item-list"})
+	if not container:
+		list.endofdirectory()
+		return
 
 	for div in container.find_all("div", {"class": "big-item-list_item"}):
 		thumb = div.img['src'].replace(" ", "%20")
@@ -164,13 +173,16 @@ def listSeason(args):
 	soup = BeautifulSoup(html, 'html.parser')
 	studio = soup.find_all("span", {"class": "border-list_text"})[2].string
 
-	for section in soup.find_all("h2", {"class": "slider-section_title"})[2:-1]:
+	for section in soup.find_all("h2", {"class": "slider-section_title"}):
+		if not section.span:
+			continue
 		title = section.get_text()[6:].strip()
+
 		list.add_item(args,
 						{'url':			args.url,
-						'title':		title,
+						'title':		title.encode('utf-8'),
 						'mode':			'list_episodes',
-						'season':		title,
+						'season':		title.encode('utf-8'),
 						'thumb':		args.icon,
 						'fanart_image':	args.fanart,
 						'episode':		args.episode,
@@ -203,7 +215,7 @@ def listEpisodes(args):
 
 		list.add_item(args,
 						{'url':			parent.a['href'],
-						'title':		parent.img['alt'],
+						'title':		parent.img['alt'].encode('utf-8'),
 						'mode':			'videoplay',
 						'thumb':		thumb,
 						'fanart_image':	args.fanart,

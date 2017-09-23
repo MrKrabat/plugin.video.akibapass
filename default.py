@@ -30,8 +30,8 @@ __version__   = __addon__.getAddonInfo('version')
 xbmc.log("[PLUGIN] %s: version %s' initialized" % (__plugin__, __version__))
 
 if __name__ == "__main__":
-    from resources.lib import akiba_main
+	from resources.lib import akiba_main
 	# start addon
-    akiba_main.main()
+	akiba_main.main()
 
 sys.modules.clear()

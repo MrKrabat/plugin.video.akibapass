@@ -66,7 +66,7 @@ def check_mode(args):
 		args.episode, args.rating, args.plot, args.year, args.studio, args.icon = ('None',)*6
 		
 		if hasattr(args,'id'):
-			args.url = '/de/v2/catalogue/episode/' + id
+			args.url = '/de/v2/catalogue/episode/' + args.id
 		elif hasattr(args,'url'):
 			args.url = args.url[24:]
 		else:

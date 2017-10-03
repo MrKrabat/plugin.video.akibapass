@@ -1,11 +1,10 @@
 # Akibapass plugin for Kodi
 
-Akibapass
-A KODI (XBMC) plugin for Akibapass. 
+Akibapass a KODI (XBMC) plugin for Akibapass.de. 
 
-Git Repo: https://github.com/MrKrabat/plugin.video.akibapass
+Git repo: https://github.com/MrKrabat/plugin.video.akibapass
 
-Forum Posting: --
+Forum posting: https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/
 
 **WARNING: You MUST be a PREMIUM member OR buy videos to use this plugin!**
 ***
@@ -36,7 +35,7 @@ What this plugin currently can do:
 - [x] Watch videos with premium subscription
 
 What is planned for the future:
-- [ ] Select video resolution
+- [ ] Select video resolution (only for videos you bought, streams are adaptive)
 
 ***
 

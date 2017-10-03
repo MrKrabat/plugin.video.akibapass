@@ -1,2 +1,6 @@
+2017.10.03 v0.2.0
++ Added video streaming
++ Added API
+
 2017.09.20 v0.1.0
 + Initial BETA release

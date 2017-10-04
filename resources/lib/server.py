@@ -39,7 +39,7 @@ def streamprovider(file):
 
     timer   = time.time() + 10
     counter = 0
-    while (time.time() < timer) and (count < 4):
+    while (time.time() < timer) and (counter < 4):
         time.sleep(0.03)
         try:
             # wait for connection
@@ -51,7 +51,7 @@ def streamprovider(file):
 
                 # send m3u8
                 connection.sendall(header + file + "\n")
-                count = count + 1
+                counter = counter + 1
             finally:
                 # close connection
                 connection.close()

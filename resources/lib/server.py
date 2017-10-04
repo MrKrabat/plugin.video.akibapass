@@ -22,41 +22,41 @@ import threading
 import xbmc
 
 
-header = 'HTTP/1.1 200 OK\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\n\n'
+header = "HTTP/1.1 200 OK\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\n\n"
 
 def streamprovider(file):
-	"""Server returning manifest to kodi
-	"""
-	t = threading.currentThread()
-	try:
-		# create listening socket
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.bind(("127.0.0.1", 10147))
-		sock.listen(1)
-		sock.setblocking(0)
-	except socket.error:
-		# unable to listen on port
-		xbmc.log("[SERVICE] Akibapass: Failed listening on port 10147", xbmc.LOGFATAL)
-		return
+    """Server returning manifest to kodi
+    """
+    t = threading.currentThread()
+    try:
+        # create listening socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind(("127.0.0.1", 10147))
+        sock.listen(1)
+        sock.setblocking(0)
+    except socket.error:
+        # unable to listen on port
+        xbmc.log("[SERVICE] Akibapass: Failed listening on port 10147", xbmc.LOGFATAL)
+        return
 
-	while getattr(t, "do_run", True):
-		time.sleep(0.05)
-		try:
-			# wait for connection
-			connection, client_address = sock.accept()
-			try:
-				# wait for request
-				connection.settimeout(10.0)
-				data = connection.recv(4096).rstrip()
+    while getattr(t, "do_run", True):
+        time.sleep(0.05)
+        try:
+            # wait for connection
+            connection, client_address = sock.accept()
+            try:
+                # wait for request
+                connection.settimeout(10.0)
+                data = connection.recv(4096).rstrip()
 
-				#send m3u8
-				connection.sendall(header + file)
-			finally:
-				# close connection
-				connection.close()
-		except socket.error:
-			# continue if no connection
-			continue
+                # send m3u8
+                connection.sendall(header + file)
+            finally:
+                # close connection
+                connection.close()
+        except socket.error:
+            # continue if no connection
+            continue
 
-	# close socket
-	sock.close()
+    # close socket
+    sock.close()

@@ -17,7 +17,6 @@
 
 import time
 import socket
-import threading
 
 import xbmc
 
@@ -27,7 +26,6 @@ header = "HTTP/1.1 200 OK\nContent-Type: application/vnd.apple.mpegurl; charset=
 def streamprovider(file):
     """Server returning manifest to kodi
     """
-    t = threading.currentThread()
     try:
         # create listening socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -39,8 +37,10 @@ def streamprovider(file):
         xbmc.log("[SERVICE] Akibapass: Failed listening on port 10147", xbmc.LOGFATAL)
         return
 
-    while getattr(t, "do_run", True):
-        time.sleep(0.05)
+    timer   = time.time() + 10
+    counter = 0
+    while (time.time() < timer) and (count < 4):
+        time.sleep(0.03)
         try:
             # wait for connection
             connection, client_address = sock.accept()
@@ -50,7 +50,8 @@ def streamprovider(file):
                 data = connection.recv(4096).rstrip()
 
                 # send m3u8
-                connection.sendall(header + file)
+                connection.sendall(header + file + "\n")
+                count = count + 1
             finally:
                 # close connection
                 connection.close()

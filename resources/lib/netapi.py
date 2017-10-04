@@ -315,9 +315,7 @@ def startplayback(args):
             item.setThumbnailImage(args.icon)
             xbmc.Player().play("http://localhost:10147/stream.m3u8" + login.getCookie(args), item)
 
-            # stop stream provider
-            xbmc.sleep(10000)
-            t.do_run = False
+            # wait until stream provider stops
             t.join()
         else:
             xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)

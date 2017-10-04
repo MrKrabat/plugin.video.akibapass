@@ -84,7 +84,7 @@ def getCookie(args):
     cookiepath = os.path.join(
         xbmc.translatePath(args._addon.getAddonInfo("profile")).decode("utf-8"),
         "cookies.lwp")
-    #save session to disk
+    # save session to disk
     args._cj.save(cookiepath, ignore_discard=True)
 
     ret = ""

@@ -1,6 +1,6 @@
 # Akibapass plugin for Kodi
 
-Akibapass a KODI (XBMC) plugin for Akibapass.de. 
+Akibapass a KODI (XBMC) plugin for Akibapass.de.
 
 Git repo: https://github.com/MrKrabat/plugin.video.akibapass
 
@@ -39,8 +39,8 @@ What is planned for the future:
 
 ***
 
-_Akibapass is a registered trademark of the peppermint anime gmbh. 
+_Akibapass is a registered trademark of the peppermint anime gmbh.
 This website and addon is not affiliated with Akibapass or peppermint anime gmbh._
 
-_Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation. 
+_Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation.
 This website and addon is not affiliated with Kodi, Team Kodi, or the XBMC Foundation._

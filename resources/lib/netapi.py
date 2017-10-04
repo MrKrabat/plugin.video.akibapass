@@ -89,7 +89,7 @@ def searchAnime(args):
             thumb = "https:" + thumb
 
         list.add_item(args,
-                      {"url":         li.a["href"],
+                      {"url":          li.a["href"],
                        "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.encode("utf-8"),
                        "mode":         "list_season",
                        "thumb":        thumb,
@@ -179,18 +179,18 @@ def listSeason(args):
         title = section.get_text()[6:].strip()
 
         list.add_item(args,
-                        {"url":            args.url,
-                        "title":        title.encode("utf-8"),
-                        "mode":            "list_episodes",
-                        "season":        title.encode("utf-8"),
-                        "thumb":        args.icon,
-                        "fanart_image":    args.fanart,
-                        "episode":        args.episode,
-                        "rating":        args.rating,
-                        "plot":            args.plot,
-                        "year":            args.year,
-                        "studio":        studio},
-                        isFolder=True, mediatype="video")
+                      {"url":          args.url,
+                       "title":        title.encode("utf-8"),
+                       "mode":         "list_episodes",
+                       "season":       title.encode("utf-8"),
+                       "thumb":        args.icon,
+                       "fanart_image": args.fanart,
+                       "episode":      args.episode,
+                       "rating":       args.rating,
+                       "plot":         args.plot,
+                       "year":         args.year,
+                       "studio":       studio},
+                      isFolder=True, mediatype="video")
 
 
     list.endofdirectory()

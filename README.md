@@ -33,10 +33,6 @@ What this plugin currently can do:
 - [x] Reactivate videos/streams
 - [x] Watch videos you have bought
 - [x] Watch videos with premium subscription
-
-What is planned for the future:
-- [ ] Select video resolution (only for videos you bought, streams are adaptive)
-
 ***
 
 _Akibapass is a registered trademark of the peppermint anime gmbh.

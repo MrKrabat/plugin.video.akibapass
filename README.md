@@ -11,12 +11,14 @@ Forum posting: https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapas
 
 What this plugin currently can do:
 - [x] Login with your account
+- [x] View last aired episodes
+- [x] View last simulcasts
 - [x] Search for animes
-- [x] Show "My Downloads"
-- [x] Show "My Collection"
-- [x] Show/browse all available anime
-- [x] Show/browse all seasons/arcs of an anime
-- [x] Show/browse all episodes of an season/arc
+- [x] View "My Downloads"
+- [x] View "My Collection"
+- [x] View all available anime
+- [x] View all seasons/arcs of an anime
+- [x] View all episodes of an season/arc
 - [x] Display various informations
 - [x] Reactivate videos/streams
 - [x] Watch videos you have bought

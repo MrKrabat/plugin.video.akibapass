@@ -17,23 +17,30 @@
 
 import re
 import sys
-import urllib
-import urllib2
 from bs4 import BeautifulSoup
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
 
 import xbmc
 import xbmcgui
 import xbmcplugin
 
-import login
-import view
+from . import login
+from . import view
 
 
 def showCatalog(args):
     """Show all animes
     """
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2/catalogue")
-    html = response.read()
+    xbmc.log("DEBUG POINT #2", xbmc.LOGERROR)
+    response = urlopen("https://www.akibapass.de/de/v2/catalogue")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "catalog_list"})
@@ -48,14 +55,14 @@ def showCatalog(args):
 
         view.add_item(args,
                       {"url":         li.a["href"],
-                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
-                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
+                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
                        "mode":        "list_season",
                        "thumb":       thumb,
                        "fanart":      thumb,
                        "rating":      str(10 - len(star) * 2),
-                       "plot":        plot.contents[3].string.strip().encode("utf-8"),
-                       "year":        li.time.string.strip().encode("utf-8")},
+                       "plot":        plot.contents[3].string.strip(),
+                       "year":        li.time.string.strip()},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -64,8 +71,8 @@ def showCatalog(args):
 def listLastEpisodes(args):
     """Show last aired episodes
     """
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2")
-    html = response.read()
+    response = urlopen("https://www.akibapass.de/de/v2")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find_all("ul", {"class": "js-slider-list"})
@@ -80,11 +87,11 @@ def listLastEpisodes(args):
 
         view.add_item(args,
                       {"url":    li.a["href"],
-                       "title":  li.img["alt"].encode("utf-8"),
+                       "title":  li.img["alt"],
                        "mode":   "videoplay",
                        "thumb":  thumb,
                        "fanart": thumb,
-                       "plot":   li.find("a", {"class": "slider_item_season"}).string.strip().encode("utf-8")},
+                       "plot":   li.find("a", {"class": "slider_item_season"}).string.strip()},
                       isFolder=False, mediatype="video")
 
     view.endofdirectory()
@@ -93,8 +100,8 @@ def listLastEpisodes(args):
 def listLastSimulcasts(args):
     """Show last simulcasts
     """
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2")
-    html = response.read()
+    response = urlopen("https://www.akibapass.de/de/v2")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find_all("ul", {"class": "js-slider-list"})
@@ -112,14 +119,14 @@ def listLastSimulcasts(args):
 
         view.add_item(args,
                       {"url":         li.a["href"],
-                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
-                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
+                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
                        "mode":        "list_season",
                        "thumb":       thumb,
                        "fanart":      thumb,
                        "rating":      str(10 - len(star) * 2),
-                       "plot":        plot.contents[3].string.strip().encode("utf-8"),
-                       "year":        li.time.string.strip().encode("utf-8")},
+                       "plot":        plot.contents[2].string.strip(),
+                       "year":        li.time.string.strip()},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -132,9 +139,9 @@ def searchAnime(args):
     if not d:
         return
 
-    post_data = urllib.urlencode({"search": d})
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2/catalogue/search", post_data)
-    html = response.read()
+    post_data = urlencode({"search": d})
+    response = urlopen("https://www.akibapass.de/de/v2/catalogue/search", post_data.encode("utf-8"))
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "catalog_list"})
@@ -152,13 +159,13 @@ def searchAnime(args):
 
         view.add_item(args,
                       {"url":    li.a["href"],
-                       "title":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "title":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
                        "mode":   "list_season",
                        "thumb":  thumb,
                        "fanart": thumb,
                        "rating": str(10 - len(star) * 2),
-                       "plot":   plot.contents[3].string.strip().encode("utf-8"),
-                       "year":   li.time.string.strip().encode("utf-8")},
+                       "plot":   plot.contents[3].string.strip(),
+                       "year":   li.time.string.strip()},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -168,8 +175,8 @@ def myDownloads(args):
     """View download able animes
     May not every episode is download able.
     """
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2/mydownloads")
-    html = response.read()
+    response = urlopen("https://www.akibapass.de/de/v2/mydownloads")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     container = soup.find("div", {"class": "big-item-list"})
@@ -184,7 +191,7 @@ def myDownloads(args):
 
         view.add_item(args,
                       {"url":    div.a["href"].replace("mydownloads/detail", "catalogue/show"),
-                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
+                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip(),
                        "mode":   "list_season",
                        "thumb":  thumb,
                        "fanart": thumb},
@@ -196,8 +203,8 @@ def myDownloads(args):
 def myCollection(args):
     """View collection
     """
-    response = urllib2.urlopen("https://www.akibapass.de/de/v2/collection")
-    html = response.read()
+    response = urlopen("https://www.akibapass.de/de/v2/collection")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     container = soup.find("div", {"class": "big-item-list"})
@@ -212,7 +219,7 @@ def myCollection(args):
 
         view.add_item(args,
                       {"url":    div.a["href"].replace("collection/detail", "catalogue/show"),
-                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
+                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip(),
                        "mode":   "list_season",
                        "thumb":  thumb,
                        "fanart": thumb},
@@ -224,19 +231,19 @@ def myCollection(args):
 def listSeason(args):
     """Show all seasons/arcs of an anime
     """
-    response = urllib2.urlopen("https://www.akibapass.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.akibapass.de" + args.url)
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
 
     date = soup.find_all("span", {"class": "border-list_text"})[0].find_all("span")
-    year = date[2].string.strip().encode("utf-8")
-    date = year + "-" + date[1].string.strip().encode("utf-8") + "-" + date[0].string.strip().encode("utf-8")
-    originaltitle = soup.find_all("span", {"class": "border-list_text"})[1].string.strip().encode("utf-8")
-    studio = soup.find_all("span", {"class": "border-list_text"})[2].string.strip().encode("utf-8")
-    plot = soup.find("div", {"class": "serie_description"}).get_text().strip().encode("utf-8")
+    year = date[2].string.strip()
+    date = year + "-" + date[1].string.strip() + "-" + date[0].string.strip()
+    originaltitle = soup.find_all("span", {"class": "border-list_text"})[1].string.strip()
+    studio = soup.find_all("span", {"class": "border-list_text"})[2].string.strip()
+    plot = soup.find("div", {"class": "serie_description"}).get_text().strip()
     credits = soup.find("div", {"class": "serie_description_more"})
-    credits = credits.p.get_text().strip().encode("utf-8") if credits else ""
+    credits = credits.p.get_text().strip() if credits else ""
     try:
         trailer = soup.find("span", {"class": "js-video-open"})["data-video"]
         trailer = "plugin://plugin.video.youtube/play/?video_id=" + trailer
@@ -257,11 +264,11 @@ def listSeason(args):
 
         view.add_item(args,
                       {"url":           args.url,
-                       "title":         title.encode("utf-8"),
+                       "title":         title,
                        "mode":          "list_episodes",
                        "thumb":         args.thumb.replace(" ", "%20"),
                        "fanart":        args.fanart.replace(" ", "%20"),
-                       "season":        title.encode("utf-8"),
+                       "season":        title,
                        "plot":          plot,
                        "plotoutline":   getattr(args, "plot", ""),
                        "studio":        studio,
@@ -278,8 +285,8 @@ def listSeason(args):
 def listEpisodes(args):
     """Show all episodes of an season/arc
     """
-    response = urllib2.urlopen("https://www.akibapass.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.akibapass.de" + args.url)
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -294,7 +301,7 @@ def listEpisodes(args):
 
         view.add_item(args,
                       {"url":    parent.a["href"],
-                       "title":  parent.img["alt"].encode("utf-8"),
+                       "title":  parent.img["alt"],
                        "mode":   "videoplay",
                        "thumb":  thumb.replace(" ", "%20"),
                        "fanart": args.fanart.replace(" ", "%20")},
@@ -306,8 +313,8 @@ def listEpisodes(args):
 def startplayback(args):
     """Plays a video
     """
-    response = urllib2.urlopen("https://www.akibapass.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.akibapass.de" + args.url)
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -321,12 +328,12 @@ def startplayback(args):
     if "reactivate" in html:
         # reactivate video
         a = soup.find("div", {"id": "jwplayer-container"}).a["href"]
-        response = urllib2.urlopen("https://www.akibapass.de" + a)
-        html = response.read()
+        response = urlopen("https://www.akibapass.de" + a)
+        html = response.read().decode("utf-8")
 
         # reload page
-        response = urllib2.urlopen("https://www.akibapass.de" + args.url)
-        html = response.read()
+        response = urlopen("https://www.akibapass.de" + args.url)
+        html = response.read().decode("utf-8")
         soup = BeautifulSoup(html, "html.parser")
 
         # check if successfull

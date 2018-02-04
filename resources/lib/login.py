@@ -60,7 +60,7 @@ def login(username, password, args):
         response = urlopen("https://www.akibapass.de/de/v2/catalogue")
         html = response.read().decode("utf-8")
 
-        if "Meine pers&#246;nlichen Informationen bearbeiten" in html:
+        if u"Meine pers&#246;nlichen Informationen bearbeiten" in html:
             # session is valid
             return True
 
@@ -79,7 +79,7 @@ def login(username, password, args):
     # check for login string
     html = response.read().decode("utf-8")
 
-    if "Meine pers&#246;nlichen Informationen bearbeiten" in html:
+    if u"Meine pers&#246;nlichen Informationen bearbeiten" in html:
         # save session to disk
         cj.save(cookiepath, ignore_discard=True)
         return True

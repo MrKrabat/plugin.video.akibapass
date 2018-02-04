@@ -319,13 +319,13 @@ def startplayback(args):
     soup = BeautifulSoup(html, "html.parser")
 
     # check if not premium
-    if "Dieses Video ist nur f&#252;r Nutzer eines Abos verf&#252;gbar" in html:
+    if u"Dieses Video ist nur f&#252;r Nutzer eines Abos verf&#252;gbar" in html:
         xbmc.log("[PLUGIN] %s: You need to own this video or be a premium member '%s'" % (args._addonname, args.url), xbmc.LOGERROR)
         xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30043))
         return
 
     # check if we have to reactivate video
-    if "reactivate" in html:
+    if u"reactivate" in html:
         # reactivate video
         a = soup.find("div", {"id": "jwplayer-container"}).a["href"]
         response = urlopen("https://www.akibapass.de" + a)
@@ -337,13 +337,13 @@ def startplayback(args):
         soup = BeautifulSoup(html, "html.parser")
 
         # check if successfull
-        if "reactivate" in html:
+        if u"reactivate" in html:
             xbmc.log("[PLUGIN] %s: Reactivation failed '%s'" % (args._addonname, args.url), xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
             return
 
     # using stream with hls+aes
-    if "Klicke hier, um den Flash-Player zu benutzen" in html:
+    if u"Klicke hier, um den Flash-Player zu benutzen" in html:
         # get stream file
         regex = r"file: \"(.*?)\","
         matches = re.search(regex, html).group(1)

@@ -125,7 +125,7 @@ def listLastSimulcasts(args):
                        "thumb":       thumb,
                        "fanart":      thumb,
                        "rating":      str(10 - len(star) * 2),
-                       "plot":        plot.contents[2].string.strip(),
+                       "plot":        plot.contents[-1].string.strip(),
                        "year":        li.time.string.strip()},
                       isFolder=True, mediatype="video")
 

@@ -242,8 +242,8 @@ def listSeason(args):
     originaltitle = soup.find_all("span", {"class": "border-list_text"})[1].string.strip()
     studio = soup.find_all("span", {"class": "border-list_text"})[2].string.strip()
     plot = soup.find("div", {"class": "serie_description"}).get_text().strip()
-    credits = soup.find("div", {"class": "serie_description_more"})
-    credits = credits.p.get_text().strip() if credits else ""
+    credit = soup.find("div", {"class": "serie_description_more"})
+    credit = credit.p.get_text().strip() if credit else ""
     try:
         trailer = soup.find("span", {"class": "js-video-open"})["data-video"]
         trailer = "plugin://plugin.video.youtube/play/?video_id=" + trailer
@@ -276,7 +276,7 @@ def listSeason(args):
                        "premiered":     date,
                        "trailer":       trailer,
                        "originaltitle": originaltitle,
-                       "credits":       credits},
+                       "credits":       credit},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
